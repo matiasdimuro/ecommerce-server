@@ -1,0 +1,69 @@
+GET http://localhost:8080/api/products
+
+###
+
+GET http://localhost:8080/api/product/656bd4212d9002efe36fd7fe
+
+###
+
+GET http://localhost:8080/api/categories
+
+### 
+
+POST http://localhost:8080/api/products HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Remera oversize gris",
+  "description": "Diseñada 100% con algodón.",
+  "currency": "ARS",
+  "price": 11500,
+  "image": "",
+  "category": "Remeras",
+  "stockPerSize": [
+    {
+      "size": "S",
+      "stock": 10
+    },
+    {
+      "size": "M",
+      "stock": 10
+    },
+    {
+      "size": "L",
+      "stock": 10
+    }
+  ]
+}
+
+###
+
+PUT http://localhost:8080/api/product/657388c7e80c9a3acdcee2b9  HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Remera básica griss",
+  "description": "Diseñada 100% con algodón.",
+  "currency": "ARS",
+  "price": 9500,
+  "image": "",
+  "category": "Remeras",
+  "stockPerSize": [
+    {
+      "size": "S",
+      "stock": 6
+    },
+    {
+      "size": "M",
+      "stock": 8
+    },
+    {
+      "size": "L",
+      "stock": 2
+    }
+  ]
+}
+
+###
+
+DELETE http://localhost:8080/api/product/657e0316c2ecb058690c7521

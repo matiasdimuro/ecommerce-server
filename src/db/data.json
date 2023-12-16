@@ -1,0 +1,153 @@
+{
+    "categories": [
+        {
+            "name": "Remeras"
+        },
+        {
+            "name": "Pantalones"
+        },
+        {
+            "name": "Bermudas"
+        },
+        {
+            "name": "Musculosas"
+        },
+        {
+            "name": "Camisas"
+        }
+    ],
+    "products": [
+        {
+            "name": "Remera básica negra",
+            "description": "Diseñada 100% con algodón.",
+            "currency": "ARS",
+            "price": 9500.00,
+            "image": "",
+            "stockPerSize": [
+                {
+                    "size": "S",
+                    "stock": 10
+                },
+                {
+                    "size": "M",
+                    "stock": 10
+                },
+                {
+                    "size": "L",
+                    "stock": 10
+                }
+            ],
+            "category": ""
+        },
+        {
+            "name": "Remera básica blanca",
+            "description": "Diseñada 100% con algodón.",
+            "currency": "ARS",
+            "price": 9500.00,
+            "image": "",
+            "stockPerSize": [
+                {
+                    "size": "S",
+                    "stock": 6
+                },
+                {
+                    "size": "M",
+                    "stock": 8
+                },
+                {
+                    "size": "L",
+                    "stock": 2
+                }
+            ],
+            "category": ""
+        },
+        {
+            "name": "Jean mom nevado",
+            "description": "Diseñado con costuras grises que resaltan y dan un acabado premium.",
+            "currency": "ARS",
+            "price": 1300.50,
+            "image": "",
+            "stockPerSize": [
+                {
+                    "size": "40",
+                    "stock": 5
+                },
+                {
+                    "size": "41",
+                    "stock": 5
+                },
+                {
+                    "size": "42",
+                    "stock": 5
+                }
+            ],
+            "category": ""
+        },
+        {
+            "name": "Bermuda cargo crema",
+            "description": "Diseñado con tela de lino de calidad premium.",
+            "currency": "ARS",
+            "price": 18000.50,
+            "image": "",
+            "stockPerSize": [
+                {
+                    "size": "40",
+                    "stock": 5
+                },
+                {
+                    "size": "41",
+                    "stock": 5
+                },
+                {
+                    "size": "42",
+                    "stock": 5
+                }
+            ],
+            "category": ""
+        },
+        {
+            "name": "Musculosa morley negra",
+            "description": "Artículo de la temporada primavera/verano 2024.",
+            "currency": "ARS",
+            "price": 9000.00,
+            "image": "",
+            "stockPerSize": [
+                {
+                    "size": "S",
+                    "stock": 10
+                },
+                {
+                    "size": "M",
+                    "stock": 10
+                },
+                {
+                    "size": "L",
+                    "stock": 10
+                }
+            ],
+            "category": ""
+        },
+        {
+            "name": "Camisa de lino luxury",
+            "description": "Camisa diseñada con tipo de cuello italiano.",
+            "currency": "ARS",
+            "price": 17000.00,
+            "image": "",
+            "stockPerSize": [
+                {
+                    "size": "S",
+                    "stock": 15
+                },
+                {
+                    "size": "M",
+                    "stock": 15
+                },
+                {
+                    "size": "L",
+                    "stock": 15
+                }
+            ],
+            "category": ""
+        }
+    ]
+}
