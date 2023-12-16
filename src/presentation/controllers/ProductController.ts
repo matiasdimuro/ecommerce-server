@@ -23,6 +23,7 @@ export class ProductController {
             res.status(200).json(products)
         } 
         catch (error) {
+            console.log(error)
             res.status(500).send("Internal server error")
         }
     }
@@ -44,6 +45,7 @@ export class ProductController {
             }
         } 
         catch (error) {
+            console.log(error)
             res.status(500).send("Internal server error")
         }
     }
@@ -63,6 +65,7 @@ export class ProductController {
             }
         } 
         catch (error) {
+            console.log(error)
             res.status(500).send("Internal server error")
         }
     }
@@ -83,6 +86,7 @@ export class ProductController {
             } 
         }
         catch (error) {
+            console.log(error)
             res.status(500).send("Internal server error")
         }        
     }
@@ -102,6 +106,7 @@ export class ProductController {
             } 
         }
         catch (error) {
+            console.log(error)
             res.status(500).send("Internal server error")
         }        
     }
@@ -114,6 +119,7 @@ export class ProductController {
             res.status(200).json(categories)
         } 
         catch (error) {
+            console.log(error)
             res.status(500).send("Internal server error")
         }
     }

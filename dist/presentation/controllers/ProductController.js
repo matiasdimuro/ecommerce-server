@@ -14,14 +14,15 @@ const ProductService_1 = require("../../domain/services/ProductService");
 const Zod_1 = require("../../validations/Zod");
 class ProductController {
     constructor(productRepository) {
+        this.productRepository = productRepository;
         this.productService = new ProductService_1.ProductService(productRepository);
     }
     getProducts(_req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("> ProductController - getProducts");
             try {
+                yield this.connectToDB();
                 const products = yield this.productService.getProductsPreview();
-                console.log("Products from controller: ", products);
                 res.status(200).json(products);
             }
             catch (error) {
@@ -33,6 +34,7 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("> ProductController - getProductById");
             try {
+                yield this.connectToDB();
                 const { id } = req.params;
                 if (!id) {
                     res.status(404).send("Product ID was not specified");
@@ -54,6 +56,7 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("> ProductController - createProduct");
             try {
+                yield this.connectToDB();
                 const productToCreate = req.body;
                 const isValidBody = (0, Zod_1.isProductSchemaValid)(productToCreate);
                 if (!isValidBody) {
@@ -73,6 +76,7 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("> ProductController - deletProduct");
             try {
+                yield this.connectToDB();
                 const { id } = req.params;
                 if (!(0, Zod_1.isObjectIdSchemaValid)(id)) {
                     res.status(404).send("Bad request");
@@ -93,6 +97,7 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("> ProductController - deletProduct");
             try {
+                yield this.connectToDB();
                 const { id } = req.params;
                 const productData = req.body;
                 if (!(0, Zod_1.isProductSchemaValid)(productData) || !(0, Zod_1.isObjectIdSchemaValid)(id)) {
@@ -112,11 +117,24 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("> ProductController - getCategories");
             try {
+                yield this.connectToDB();
                 const categories = yield this.productService.getCategories();
                 res.status(200).json(categories);
             }
             catch (error) {
                 res.status(500).send("Internal server error");
+            }
+        });
+    }
+    connectToDB() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.productRepository.createConnection();
+                console.log(`Server connected to database ...`);
+            }
+            catch (err) {
+                console.error(`Error! Server could not be connected to database ...`);
+                throw new Error(`Error! Server could not be connected to database ...`);
             }
         });
     }

@@ -24,13 +24,8 @@ class MongodbRepository {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             console.log("> GET products from MongoDB");
-            const projection = { name: 1, price: 1, image: 1, category: 1 };
-            // 
-            const toLog = this.db;
-            console.log(toLog);
-            // 
+            const projection = { _id: 1, name: 1, price: 1, image: 1, category: 1 };
             const documents = yield ((_a = this.db) === null || _a === void 0 ? void 0 : _a.collection('products').find({}, { projection }).toArray());
-            console.log("Documnts from Repository: ", documents);
             return documents;
         });
     }
@@ -90,20 +85,11 @@ class MongodbRepository {
         });
     }
     createConnection() {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             console.log("> Connecting to MongoDB ...");
-            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-                var _a;
-                try {
-                    this.client = yield mongodb_1.MongoClient.connect(URL);
-                    this.db = (_a = this.client) === null || _a === void 0 ? void 0 : _a.db(DB_NAME);
-                    console.log("HOLAAAA");
-                    resolve();
-                }
-                catch (err) {
-                    reject(err);
-                }
-            }));
+            this.client = yield mongodb_1.MongoClient.connect(URL);
+            this.db = (_a = this.client) === null || _a === void 0 ? void 0 : _a.db(DB_NAME);
         });
     }
 }

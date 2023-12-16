@@ -21,12 +21,11 @@ class ProductService {
             console.log("> ProductService - getProducts");
             const productsSchema = yield this.productsRepository.getProductsPreview();
             let products = [];
-            console.log("Products from Service: ", productsSchema);
             for (let i = 0; i < productsSchema.length; i++) {
                 const productSchema = productsSchema[i];
                 const categorySchema = yield this.productsRepository.getCategory(productSchema.category);
                 const category = this.getCategoryGivenName(categorySchema.name);
-                const product = new Product_1.Product(productSchema.name, "", "", productSchema.price, productSchema.image, category, []);
+                const product = new Product_1.Product(productSchema._id, productSchema.name, "", "", productSchema.price, productSchema.image, category, []);
                 products.push(product.getProductPreview());
             }
             return products;
@@ -38,7 +37,7 @@ class ProductService {
             const productSchema = yield this.productsRepository.getProductById(id);
             const categorySchema = yield this.productsRepository.getCategory(productSchema.category);
             const category = this.getCategoryGivenName(categorySchema.name);
-            const product = new Product_1.Product(productSchema.name, productSchema.description, productSchema.currency, productSchema.price, productSchema.image, category, productSchema.stockPerSize);
+            const product = new Product_1.Product(productSchema._id, productSchema.name, productSchema.description, productSchema.currency, productSchema.price, productSchema.image, category, productSchema.stockPerSize);
             return product;
         });
     }
