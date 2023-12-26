@@ -2,6 +2,10 @@ GET http://localhost:8080/api/products
 
 ###
 
+GET http://localhost:8080/api/products?category=656bca292d9002efe36fd7f3,656bca292d9002efe36fd7f4
+
+###
+
 GET http://localhost:8080/api/product/656bd4212d9002efe36fd7fe
 
 ###

@@ -4,6 +4,7 @@ import { Product } from '../../domain/entities/Product';
 import { IProductEntity, IProductPreview } from '../../types/interfaces/IProduct';
 import { IProductsRepository } from '../../types/interfaces/IProductsRepository';
 import { isObjectIdSchemaValid, isProductSchemaValid } from '../../validations/Zod';
+import { IGetProductsFilters } from '../../types/interfaces/IGetProductsFilters';
 
 export class ProductController {
 
@@ -15,11 +16,13 @@ export class ProductController {
         this.productService = new ProductService(productRepository)
     }
 
-    public async getProducts(_req: Request, res: Response) {
+    public async getProducts(req: Request, res: Response) {
 		console.log("> ProductController - getProducts")
         try {
+            const type: IGetProductsFilters = req.query
             await this.connectToDB()
-			const products: IProductPreview[] = await this.productService.getProductsPreview()
+			const products: IProductPreview[] = await this.productService.getProductsPreview(type)
+            await this.productRepository.closeConnection()
             res.status(200).json(products)
         } 
         catch (error) {
@@ -31,7 +34,6 @@ export class ProductController {
     public async getProductById(req: Request, res: Response) {
 		console.log("> ProductController - getProductById")
         try {
-            await this.connectToDB()
             const { id } = req.params
             if (!id) {
                 res.status(404).send("Product ID was not specified")
@@ -40,7 +42,9 @@ export class ProductController {
                 res.status(404).send("Bad request")
             }
             else {
+                await this.connectToDB()
                 const product: Product = await this.productService.getProductById(id)
+                await this.productRepository.closeConnection()
                 res.status(200).json(product)
             }
         } 
@@ -53,14 +57,15 @@ export class ProductController {
     public async createProduct(req: Request, res: Response) {
         console.log("> ProductController - createProduct")
         try {    
-            await this.connectToDB()
             const productToCreate: IProductEntity = req.body 
             const isValidBody = isProductSchemaValid(productToCreate)
             if (!isValidBody) {
                 res.status(404).send("Bad request")
             }
             else {
+                await this.connectToDB()
                 const ID = await this.productService.createProduct(productToCreate)
+                await this.productRepository.closeConnection()
                 res.status(201).json({ msg: `Product with ID ${ID} has been created.` })
             }
         } 
@@ -73,13 +78,14 @@ export class ProductController {
     public async deleteProduct(req: Request, res: Response) {
         console.log("> ProductController - deletProduct")
         try {
-            await this.connectToDB()
             const { id } = req.params
             if (!isObjectIdSchemaValid(id)) {
                 res.status(404).send("Bad request")
             }
             else {
+                await this.connectToDB()
                 const objectIdDeleted = await this.productService.deleteProduct(id)
+                await this.productRepository.closeConnection()
                 objectIdDeleted === -1
                     ? res.status(404).json({ msg: `Error. Product ${id} does not exist.` })
                     : res.status(202).json({ msg: `Product ${id} has been deleted.` })
@@ -94,14 +100,15 @@ export class ProductController {
     public async editProduct(req: Request, res: Response) {
         console.log("> ProductController - deletProduct")
         try {
-            await this.connectToDB()
             const { id } = req.params
             const productData: IProductEntity = req.body
             if (!isProductSchemaValid(productData) || !isObjectIdSchemaValid(id)) {
                 res.status(404).send("Bad request")
             }
             else {
+                await this.connectToDB()
                 await this.productService.editProduct(id, productData)
+                await this.productRepository.closeConnection()
                 res.status(204)
             } 
         }
@@ -116,6 +123,7 @@ export class ProductController {
         try {    
             await this.connectToDB()
             const categories = await this.productService.getCategories()
+            await this.productRepository.closeConnection()
             res.status(200).json(categories)
         } 
         catch (error) {

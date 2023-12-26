@@ -4,6 +4,7 @@ import { CategorySchema, ProductPreviewSchema, ProductSchema } from "../../db/sc
 import { Product } from "../entities/Product"
 import { Category } from "../../types/enums/Category.enum"
 import { IProductEntity, IProductPreview } from "../../types/interfaces/IProduct"
+import { IGetProductsFilters } from "../../types/interfaces/IGetProductsFilters"
 
 export class ProductService {
 
@@ -13,9 +14,9 @@ export class ProductService {
         this.productsRepository = productsRepository
     }
 
-    public async getProductsPreview(): Promise<IProductPreview[]> {
+    public async getProductsPreview(filters: IGetProductsFilters): Promise<IProductPreview[]> {
 		console.log("> ProductService - getProducts")        
-        const productsSchema: ProductPreviewSchema[] = await this.productsRepository.getProductsPreview()
+        const productsSchema: ProductPreviewSchema[] = await this.productsRepository.getProductsPreview(filters)
         let products: IProductPreview[] = []
         for (let i = 0; i < productsSchema.length; i++) {
             const productSchema = productsSchema[i]

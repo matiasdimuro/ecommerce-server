@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { IProductsRepository } from '../types/interfaces/IProductsRepository';
 import { CategoryFiltersSchema, CategorySchema, ProductPreviewSchema, ProductSchema }  from '../db/schemas/MongoSchemas'
 import { IProductEntity } from '../types/interfaces/IProduct';
+import { IGetProductsFilters } from '../types/interfaces/IGetProductsFilters';
 
 dotenv.config();
 
@@ -17,10 +18,18 @@ export class MongodbRepository implements IProductsRepository {
 
     constructor() {}
 
-    public async getProductsPreview(): Promise<ProductPreviewSchema[]> {
+    public async getProductsPreview(filters: IGetProductsFilters): Promise<ProductPreviewSchema[]> {
         console.log("> GET products from MongoDB")
+        const query = filters.category 
+            ? { category: { $in: filters.category.split(",").map(stringID => (
+                new ObjectId(stringID)
+            )) } } 
+            : {}
+        console.log(query);
+        
         const projection = { _id:1, name: 1, price: 1, image: 1, category: 1 }
-        const documents = await this.db?.collection('products').find({}, { projection }).toArray() as ProductPreviewSchema[]
+        const documents = await this.db?.collection('products').find(query, { projection }).toArray() as ProductPreviewSchema[]
+        console.log(documents);
         return documents
     }
 
@@ -76,8 +85,8 @@ export class MongodbRepository implements IProductsRepository {
         this.db = this.client?.db(DB_NAME)
     }
 
-    // public async closeConnection(): Promise<void> {
-    //     await this.client?.close()
-    //     console.log("> Connection to MongoDB closed ...")
-    // }
+    public async closeConnection(): Promise<void> {
+        await this.client?.close()
+        console.log("> Connection to MongoDB closed ...")
+    }
 }
