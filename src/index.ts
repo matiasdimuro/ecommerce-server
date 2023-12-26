@@ -15,9 +15,6 @@ app.use((_req: Request, res: Response, next) => {
 app.use(express.json())
 
 app.use("/api", router);
-app.use("/", (_req: Request, res: Response) => {
-    res.send(`<h1>Server home page</h1>`)
-})
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT} ...`)
